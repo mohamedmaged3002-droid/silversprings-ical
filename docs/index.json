@@ -1,47 +1,65 @@
 {
-  "updatedAt": "2026-08-18T15:33:11.933Z",
+  "updatedAt": "2026-08-18T21:56:28.426Z",
   "skipped": [],
   "properties": [
     {
       "wp": 96001,
       "title": "Monochrome - 3 Bedroom - Garden View - FF",
       "slug": "monochrome---3-bedroom---garden-view---ff",
-      "availableCount": 167,
-      "blockedCount": 198,
+      "availableCount": 168,
+      "blockedCount": 197,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:28:51.893Z"
+      "updatedAt": "2026-08-18T21:52:21.526Z"
     },
     {
       "wp": 96002,
       "title": "Monochrome - Two Bed - Pool / Garden Access - GF",
       "slug": "monochrome---two-bed---pool-garden-access---gf",
-      "availableCount": 173,
-      "blockedCount": 192,
+      "availableCount": 174,
+      "blockedCount": 191,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:28:57.568Z"
+      "updatedAt": "2026-08-18T21:52:27.796Z"
     },
     {
       "wp": 96003,
       "title": "Neutral Studio - Garden View -FF",
       "slug": "neutral-studio---garden-view--ff",
+      "availableCount": 162,
+      "blockedCount": 203,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:52:33.570Z"
+    },
+    {
+      "wp": 96004,
+      "title": "Fully Furnished/Serviced 3 Bed Apart FF @ Silver Palm",
+      "slug": "fully-furnishedserviced-3-bed-apart-ff-silver-palm",
       "availableCount": 161,
       "blockedCount": 204,
       "minStay": 1,
@@ -49,251 +67,71 @@
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:29:03.257Z"
-    },
-    {
-      "wp": 96004,
-      "title": "Fully Furnished/Serviced 3 Bed Apart FF @ Silver Palm",
-      "slug": "fully-furnishedserviced-3-bed-apart-ff-silver-palm",
-      "availableCount": 160,
-      "blockedCount": 205,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:29:09.245Z"
+      "updatedAt": "2026-08-18T21:52:38.976Z"
     },
     {
       "wp": 96005,
       "title": "Neutral - 2 Bed - FF @ Silver Springs Residence",
       "slug": "neutral---2-bed---ff-silver-springs-residence",
-      "availableCount": 74,
-      "blockedCount": 291,
+      "availableCount": 75,
+      "blockedCount": 290,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:29:14.703Z"
+      "updatedAt": "2026-08-18T21:52:45.272Z"
     },
     {
       "wp": 96006,
       "title": "Monochrome -3 Bed - Pool & Garden Access - GF",
       "slug": "monochrome--3-bed---pool-garden-access---gf",
-      "availableCount": 153,
-      "blockedCount": 212,
+      "availableCount": 154,
+      "blockedCount": 211,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:29:20.622Z"
+      "updatedAt": "2026-08-18T21:52:50.869Z"
     },
     {
       "wp": 96007,
       "title": "Two Bed Serviced Apartment GF @ Silver Palm",
       "slug": "two-bed-serviced-apartment-gf-silver-palm",
-      "availableCount": 95,
-      "blockedCount": 270,
+      "availableCount": 96,
+      "blockedCount": 269,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:29:26.966Z"
+      "updatedAt": "2026-08-18T21:52:57.016Z"
     },
     {
       "wp": 96008,
       "title": "Monochrome - 2 Bedroom - Garden View - FF",
       "slug": "monochrome---2-bedroom---garden-view---ff",
-      "availableCount": 138,
-      "blockedCount": 227,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:29:33.492Z"
-    },
-    {
-      "wp": 96009,
-      "title": "Scandinavian - 2 Bed - FF @ Silver Springs Residence",
-      "slug": "scandinavian---2-bed---ff-silver-springs-residence",
-      "availableCount": 169,
-      "blockedCount": 196,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:29:39.219Z"
-    },
-    {
-      "wp": 96010,
-      "title": "Neutral Studio - Pool / Garden Access - GF",
-      "slug": "neutral-studio---pool-garden-access---gf",
-      "availableCount": 147,
-      "blockedCount": 218,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:29:45.105Z"
-    },
-    {
-      "wp": 96011,
-      "title": "Neutral - Two Bedroom - GF",
-      "slug": "neutral---two-bedroom---gf",
-      "availableCount": 151,
-      "blockedCount": 214,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:29:50.969Z"
-    },
-    {
-      "wp": 96012,
-      "title": "Fully Furnished/Serviced 2 Bed Apart GF @ Silver Palm",
-      "slug": "fully-furnishedserviced-2-bed-apart-gf-silver-palm",
-      "availableCount": 173,
-      "blockedCount": 192,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:29:57.057Z"
-    },
-    {
-      "wp": 96013,
-      "title": "Private Pool - 3 Bed Serviced Apart GF @ Silver Palm",
-      "slug": "private-pool---3-bed-serviced-apart-gf-silver-palm",
-      "availableCount": 143,
-      "blockedCount": 222,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:30:04.209Z"
-    },
-    {
-      "wp": 96014,
-      "title": "Garden View - 3 Bed Serviced Apart FF @ Silver Palm",
-      "slug": "garden-view---3-bed-serviced-apart-ff-silver-palm",
-      "availableCount": 167,
-      "blockedCount": 198,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:30:10.682Z"
-    },
-    {
-      "wp": 96015,
-      "title": "Neutral Studio - Garden View -TF",
-      "slug": "neutral-studio---garden-view--tf",
-      "availableCount": 333,
-      "blockedCount": 32,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:30:16.828Z"
-    },
-    {
-      "wp": 96016,
-      "title": "Monochrome - One Bedroom - GF",
-      "slug": "monochrome---one-bedroom---gf",
-      "availableCount": 143,
-      "blockedCount": 222,
-      "minStay": 1,
-      "minStayMin": 1,
-      "minStayMax": 1,
-      "minStayRanges": [
-        {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
-          "min": 1
-        }
-      ],
-      "updatedAt": "2026-08-18T15:30:22.737Z"
-    },
-    {
-      "wp": 96017,
-      "title": "Scandinavian -2 Bed- SF @ Silver Springs Residence",
-      "slug": "scandinavian--2-bed--sf-silver-springs-residence",
       "availableCount": 139,
       "blockedCount": 226,
       "minStay": 1,
@@ -301,156 +139,318 @@
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:30:28.718Z"
+      "updatedAt": "2026-08-18T21:53:02.429Z"
+    },
+    {
+      "wp": 96009,
+      "title": "Scandinavian - 2 Bed - FF @ Silver Springs Residence",
+      "slug": "scandinavian---2-bed---ff-silver-springs-residence",
+      "availableCount": 170,
+      "blockedCount": 195,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:53:07.972Z"
+    },
+    {
+      "wp": 96010,
+      "title": "Neutral Studio - Pool / Garden Access - GF",
+      "slug": "neutral-studio---pool-garden-access---gf",
+      "availableCount": 148,
+      "blockedCount": 217,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:53:13.930Z"
+    },
+    {
+      "wp": 96011,
+      "title": "Neutral - Two Bedroom - GF",
+      "slug": "neutral---two-bedroom---gf",
+      "availableCount": 152,
+      "blockedCount": 213,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:53:19.403Z"
+    },
+    {
+      "wp": 96012,
+      "title": "Fully Furnished/Serviced 2 Bed Apart GF @ Silver Palm",
+      "slug": "fully-furnishedserviced-2-bed-apart-gf-silver-palm",
+      "availableCount": 174,
+      "blockedCount": 191,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:53:24.790Z"
+    },
+    {
+      "wp": 96013,
+      "title": "Private Pool - 3 Bed Serviced Apart GF @ Silver Palm",
+      "slug": "private-pool---3-bed-serviced-apart-gf-silver-palm",
+      "availableCount": 137,
+      "blockedCount": 228,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:53:30.319Z"
+    },
+    {
+      "wp": 96014,
+      "title": "Garden View - 3 Bed Serviced Apart FF @ Silver Palm",
+      "slug": "garden-view---3-bed-serviced-apart-ff-silver-palm",
+      "availableCount": 168,
+      "blockedCount": 197,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:53:35.839Z"
+    },
+    {
+      "wp": 96015,
+      "title": "Neutral Studio - Garden View -TF",
+      "slug": "neutral-studio---garden-view--tf",
+      "availableCount": 334,
+      "blockedCount": 31,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:53:42.570Z"
+    },
+    {
+      "wp": 96016,
+      "title": "Monochrome - One Bedroom - GF",
+      "slug": "monochrome---one-bedroom---gf",
+      "availableCount": 144,
+      "blockedCount": 221,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:53:48.169Z"
+    },
+    {
+      "wp": 96017,
+      "title": "Scandinavian -2 Bed- SF @ Silver Springs Residence",
+      "slug": "scandinavian--2-bed--sf-silver-springs-residence",
+      "availableCount": 134,
+      "blockedCount": 231,
+      "minStay": 1,
+      "minStayMin": 1,
+      "minStayMax": 1,
+      "minStayRanges": [
+        {
+          "from": "2026-08-19",
+          "to": "2027-08-18",
+          "min": 1
+        }
+      ],
+      "updatedAt": "2026-08-18T21:53:53.604Z"
     },
     {
       "wp": 96018,
       "title": "Scandinavian -2 Bed- TF @ Silver Springs Residence",
       "slug": "scandinavian--2-bed--tf-silver-springs-residence",
-      "availableCount": 157,
-      "blockedCount": 208,
+      "availableCount": 158,
+      "blockedCount": 207,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:30:34.707Z"
+      "updatedAt": "2026-08-18T21:53:59.098Z"
     },
     {
       "wp": 96019,
       "title": "Monochrome - 3 Bedroom - Garden View - SF",
       "slug": "monochrome---3-bedroom---garden-view---sf",
-      "availableCount": 171,
-      "blockedCount": 194,
+      "availableCount": 172,
+      "blockedCount": 193,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:30:40.492Z"
+      "updatedAt": "2026-08-18T21:54:04.594Z"
     },
     {
       "wp": 96020,
       "title": "Neutral - 2 Bed - TF @ Silver Springs Residence",
       "slug": "neutral---2-bed---tf-silver-springs-residence",
-      "availableCount": 151,
-      "blockedCount": 214,
+      "availableCount": 146,
+      "blockedCount": 219,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:30:46.645Z"
+      "updatedAt": "2026-08-18T21:54:10.249Z"
     },
     {
       "wp": 96021,
       "title": "Monochrome - 3 Bedroom - Garden View - TF",
       "slug": "monochrome---3-bedroom---garden-view---tf",
-      "availableCount": 161,
-      "blockedCount": 204,
+      "availableCount": 162,
+      "blockedCount": 203,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:30:52.322Z"
+      "updatedAt": "2026-08-18T21:54:15.825Z"
     },
     {
       "wp": 96022,
       "title": "Neutral - 2 Bed - SF @ Silver Springs Residence",
       "slug": "neutral---2-bed---sf-silver-springs-residence",
-      "availableCount": 81,
-      "blockedCount": 284,
+      "availableCount": 82,
+      "blockedCount": 283,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:30:58.080Z"
+      "updatedAt": "2026-08-18T21:54:21.560Z"
     },
     {
       "wp": 96023,
       "title": "Monochrome - 2 Bed - Garden View - SF",
       "slug": "monochrome---2-bed---garden-view---sf",
-      "availableCount": 166,
-      "blockedCount": 199,
+      "availableCount": 167,
+      "blockedCount": 198,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:03.589Z"
+      "updatedAt": "2026-08-18T21:54:27.159Z"
     },
     {
       "wp": 96024,
       "title": "Monochrome 2 Bed Garden View TF",
       "slug": "monochrome-2-bed-garden-view-tf",
-      "availableCount": 108,
-      "blockedCount": 257,
+      "availableCount": 109,
+      "blockedCount": 256,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:09.347Z"
+      "updatedAt": "2026-08-18T21:54:32.548Z"
     },
     {
       "wp": 96025,
       "title": "Private Pool Apartment in Silver Palm New Cairo",
       "slug": "private-pool-apartment-in-silver-palm-new-cairo",
-      "availableCount": 340,
-      "blockedCount": 25,
+      "availableCount": 341,
+      "blockedCount": 24,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:15.014Z"
+      "updatedAt": "2026-08-18T21:54:38.222Z"
     },
     {
       "wp": 96026,
@@ -463,66 +463,66 @@
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:20.621Z"
+      "updatedAt": "2026-08-18T21:54:43.617Z"
     },
     {
       "wp": 96027,
       "title": "Fully Furnished/Serviced 3 Bed Apart TF @ Silver Palm",
       "slug": "fully-furnishedserviced-3-bed-apart-tf-silver-palm",
-      "availableCount": 131,
-      "blockedCount": 234,
+      "availableCount": 132,
+      "blockedCount": 233,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:26.129Z"
+      "updatedAt": "2026-08-18T21:54:49.022Z"
     },
     {
       "wp": 96028,
       "title": "1-Bedroom Apart with Sofa Bed in Silver Palm GF",
       "slug": "1-bedroom-apart-with-sofa-bed-in-silver-palm-gf",
-      "availableCount": 157,
-      "blockedCount": 208,
+      "availableCount": 158,
+      "blockedCount": 207,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:31.714Z"
+      "updatedAt": "2026-08-18T21:54:54.407Z"
     },
     {
       "wp": 96029,
       "title": "Studio with Pool Access & Serene Garden View - GF",
       "slug": "studio-with-pool-access-serene-garden-view---gf",
-      "availableCount": 173,
-      "blockedCount": 192,
+      "availableCount": 172,
+      "blockedCount": 193,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:37.611Z"
+      "updatedAt": "2026-08-18T21:54:59.787Z"
     },
     {
       "wp": 96030,
@@ -535,192 +535,192 @@
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:43.543Z"
+      "updatedAt": "2026-08-18T21:55:05.531Z"
     },
     {
       "wp": 96031,
       "title": "3-Bedroom Apart with Garden Views & Pool Access GF",
       "slug": "3-bedroom-apart-with-garden-views-pool-access-gf",
-      "availableCount": 159,
-      "blockedCount": 206,
+      "availableCount": 160,
+      "blockedCount": 205,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:49.502Z"
+      "updatedAt": "2026-08-18T21:55:10.911Z"
     },
     {
       "wp": 96032,
       "title": "2-Bedroom Apartment GF @ Silver Palm",
       "slug": "2-bedroom-apartment-gf-silver-palm",
-      "availableCount": 132,
-      "blockedCount": 233,
+      "availableCount": 133,
+      "blockedCount": 232,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:31:55.993Z"
+      "updatedAt": "2026-08-18T21:55:16.422Z"
     },
     {
       "wp": 96033,
       "title": "1-Bedroom Apart with Sofa Bed in Silver Palm FF",
       "slug": "1-bedroom-apart-with-sofa-bed-in-silver-palm-ff",
-      "availableCount": 351,
-      "blockedCount": 14,
+      "availableCount": 352,
+      "blockedCount": 13,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:01.867Z"
+      "updatedAt": "2026-08-18T21:55:22.460Z"
     },
     {
       "wp": 96034,
       "title": "Cozy Studio with Serene Garden Views - FF",
       "slug": "cozy-studio-with-serene-garden-views---ff",
-      "availableCount": 354,
-      "blockedCount": 11,
+      "availableCount": 355,
+      "blockedCount": 10,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:08.225Z"
+      "updatedAt": "2026-08-18T21:55:28.091Z"
     },
     {
       "wp": 96035,
       "title": "1-Bedroom Apart with Sofa Bed in Silver Palm SF",
       "slug": "1-bedroom-apart-with-sofa-bed-in-silver-palm-sf",
-      "availableCount": 297,
-      "blockedCount": 68,
+      "availableCount": 298,
+      "blockedCount": 67,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:14.385Z"
+      "updatedAt": "2026-08-18T21:55:33.564Z"
     },
     {
       "wp": 96036,
       "title": "1-Bedroom Apart with Sofa Bed in Silver Palm TF",
       "slug": "1-bedroom-apart-with-sofa-bed-in-silver-palm-tf",
-      "availableCount": 241,
-      "blockedCount": 124,
+      "availableCount": 242,
+      "blockedCount": 123,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:20.049Z"
+      "updatedAt": "2026-08-18T21:55:39.104Z"
     },
     {
       "wp": 96037,
       "title": "Cozy Studio with Serene Garden Views - TF",
       "slug": "cozy-studio-with-serene-garden-views---tf",
-      "availableCount": 348,
-      "blockedCount": 17,
+      "availableCount": 349,
+      "blockedCount": 16,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:25.677Z"
+      "updatedAt": "2026-08-18T21:55:44.761Z"
     },
     {
       "wp": 96038,
       "title": "2-Bedroom Apart with Garden Views & Pool Access GF",
       "slug": "2-bedroom-apart-with-garden-views-pool-access-gf",
-      "availableCount": 239,
-      "blockedCount": 126,
+      "availableCount": 240,
+      "blockedCount": 125,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:31.642Z"
+      "updatedAt": "2026-08-18T21:55:50.109Z"
     },
     {
       "wp": 96039,
       "title": "3-Bedroom Apart with Garden Views & Balcony FF",
       "slug": "3-bedroom-apart-with-garden-views-balcony-ff",
-      "availableCount": 345,
-      "blockedCount": 20,
+      "availableCount": 346,
+      "blockedCount": 19,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:37.277Z"
+      "updatedAt": "2026-08-18T21:55:55.494Z"
     },
     {
       "wp": 96040,
       "title": "3-Bedroom Apart with Garden Views & Balcony SF",
       "slug": "3-bedroom-apart-with-garden-views-balcony-sf",
-      "availableCount": 339,
-      "blockedCount": 26,
+      "availableCount": 340,
+      "blockedCount": 25,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:42.965Z"
+      "updatedAt": "2026-08-18T21:56:00.926Z"
     },
     {
       "wp": 96041,
@@ -733,84 +733,84 @@
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:48.340Z"
+      "updatedAt": "2026-08-18T21:56:06.455Z"
     },
     {
       "wp": 96042,
       "title": "Two Bed Apartment @ Silver Palm",
       "slug": "two-bed-apartment-silver-palm",
-      "availableCount": 170,
-      "blockedCount": 195,
+      "availableCount": 171,
+      "blockedCount": 194,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:32:54.325Z"
+      "updatedAt": "2026-08-18T21:56:11.886Z"
     },
     {
       "wp": 96043,
       "title": "3-Bedroom Apart with Garden View TF",
       "slug": "3-bedroom-apart-with-garden-view-tf",
-      "availableCount": 364,
-      "blockedCount": 1,
+      "availableCount": 365,
+      "blockedCount": 0,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:33:00.234Z"
+      "updatedAt": "2026-08-18T21:56:17.449Z"
     },
     {
       "wp": 96044,
       "title": "Garden View - 3 Bed Serviced Apart TF Silver Palm",
       "slug": "garden-view---3-bed-serviced-apart-tf-silver-palm",
-      "availableCount": 173,
-      "blockedCount": 192,
+      "availableCount": 174,
+      "blockedCount": 191,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:33:06.068Z"
+      "updatedAt": "2026-08-18T21:56:22.863Z"
     },
     {
       "wp": 96045,
       "title": "Brand new soft light 2BR @ Silver Palm",
       "slug": "brand-new-soft-light-2br-silver-palm",
-      "availableCount": 147,
-      "blockedCount": 218,
+      "availableCount": 148,
+      "blockedCount": 217,
       "minStay": 1,
       "minStayMin": 1,
       "minStayMax": 1,
       "minStayRanges": [
         {
-          "from": "2026-08-18",
-          "to": "2027-08-17",
+          "from": "2026-08-19",
+          "to": "2027-08-18",
           "min": 1
         }
       ],
-      "updatedAt": "2026-08-18T15:33:11.932Z"
+      "updatedAt": "2026-08-18T21:56:28.425Z"
     }
   ]
 }
