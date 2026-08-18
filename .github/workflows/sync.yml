@@ -1,0 +1,56 @@
+name: Sync Silver Springs availability
+
+on:
+  schedule:
+    # Every 3h. Cadence is a CORRECTNESS parameter, not a cost one (L-095): the
+    # window between an operator-side booking and our feed reflecting it is the
+    # double-booking window. 45 units at REQUEST_DELAY_MS=4500 with 5 calendar
+    # pages each runs well under an hour, so 3h leaves no overlap.
+    - cron: '17 */3 * * *'   # :17 — avoid the top-of-hour pile-up with the other ical crons
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+# One run at a time — never let two syncs race on the same docs/ commit.
+concurrency:
+  group: silversprings-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'   # 22+ has native WebSocket (required by @supabase/supabase-js)
+          cache: 'npm'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: Scrape availability -> docs/*.ics
+        # Deliberately SLOW in CI: checkout.lodgify.com throttles under sustained
+        # load (L-048 — it walled us off after 7 units during the local content
+        # scrape). A wide inter-request delay keeps us polite (D-003) and under the
+        # throttle; the in-code backoff + circuit breaker handle the rest.
+        env:
+          REQUEST_DELAY_MS: '4500'
+        run: node sync.js
+
+      - name: Commit refreshed feeds
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          if git diff --staged --quiet; then echo "No feed change."; exit 0; fi
+          git commit -m "chore: refresh Silver Springs iCal feeds [skip ci]"
+          # Robust push: main can move under a long run (L-062 CI push race).
+          for i in 1 2 3 4 5; do
+            git push && { echo "Pushed (attempt $i)."; exit 0; }
+            echo "Push rejected; integrating remote and retrying ($i)..."
+            git fetch origin main
+            git merge -X ours --no-edit origin/main || true
+          done
+          echo "ERROR: push failed after 5 attempts"; exit 1

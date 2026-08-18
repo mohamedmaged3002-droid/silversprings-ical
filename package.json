@@ -1,0 +1,20 @@
+{
+  "name": "silversprings-ical",
+  "version": "1.0.0",
+  "description": "Scrapes Silver Springs Residence (Lodgify website 479059) availability and publishes per-unit iCal feeds for BlueKeys calendar sync",
+  "scripts": {
+    "content": "node content.js",
+    "sync": "node sync.js",
+    "wire": "node wire.js",
+    "watch": "node pricewatch.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1087.0",
+    "@aws-sdk/lib-storage": "^3.1087.0",
+    "@supabase/supabase-js": "^2.110.5",
+    "dotenv": "^16.6.1",
+    "nodemailer": "^6.10.1",
+    "playwright": "^1.48.0"
+  }
+}
