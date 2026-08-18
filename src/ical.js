@@ -1,5 +1,6 @@
 // src/ical.js
 const { ymd, parseIso } = require('./dates');
+const cfg = require('./config');
 
 function esc(text) {
   return String(text || '').replace(/[\\;,]/g, (c) => '\\' + c).replace(/\n/g, '\\n');
@@ -16,7 +17,7 @@ function buildIcal({ wp, title, ranges = [] }) {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//BlueKeys Almaza iCal Bridge//EN',
+    `PRODID:-//BlueKeys ${cfg.SOURCE} iCal Bridge//EN`,
     'METHOD:PUBLISH',
     `X-WR-CALNAME:${esc(title)}`,
     'CALSCALE:GREGORIAN',
@@ -29,7 +30,12 @@ function buildIcal({ wp, title, ranges = [] }) {
       // UID encodes start+end so ANY change to a range yields a NEW event. OTAs
       // sync incrementally by UID — a stable UID means a changed block is treated
       // as "unchanged" and silently never updates. See L-011.
-      `UID:almaza-${wp}-${startYmd}-${endYmd}@bluekeys.co`,
+      //
+      // The operator prefix MUST match this repo, not the repo it was forked from.
+      // A UID namespace is an OTA-visible identity: renaming it after OTAs have
+      // subscribed makes every existing event vanish and reappear, which on some
+      // channels needs a manual re-add per listing. Fix it before first publish.
+      `UID:${cfg.SOURCE}-${wp}-${startYmd}-${endYmd}@bluekeys.co`,
       `DTSTAMP:${stamp}`,
       `LAST-MODIFIED:${stamp}`,
       'SEQUENCE:0',
