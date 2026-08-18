@@ -7,12 +7,11 @@
 // cookie is forwarded — the fetch uses `credentials: 'omit'` and the spike
 // proved it works with no cookie at all.
 //
-// D-003: do NOT add stealth/anti-detection plugins. Silver Springs HAS authorised
-// this integration (deal signed 2026-08-18), but authorisation is not licence to
-// hammer their servers — the rates host still throttles (L-048) and an honest,
-// polite client is the only sanctioned technique. If honest access stops working,
-// STOP and escalate to Maged; the operator can hand us their Lodgify API key,
-// which removes the need for this path entirely.
+// D-003: do NOT add stealth/anti-detection plugins. An agreement to integrate is
+// not licence to hammer the operator's servers — the rates host throttles, and an
+// honest, polite client is the only acceptable technique. If honest access stops
+// working, STOP and escalate rather than working around it; the operator can
+// supply a Lodgify API key, which removes the need for this path entirely.
 const { chromium } = require('playwright');
 const cfg = require('./config');
 

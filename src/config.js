@@ -1,12 +1,10 @@
 // Central tunables.
 //
-// Silver Springs is a SANCTIONED partner (deal signed 2026-08-18) — unlike Almaza,
-// which this repo was forked from. That changes two things:
-//   1. service_fee_percent = 0 (D-048 sanctioned-partner precedent), NOT Almaza's +10%.
-//   2. We may ask the operator for their real Lodgify iCal exports; until they
-//      arrive we self-generate from the checkout calendar API (Almaza pattern).
-// Politeness is STILL a hard requirement (D-003) — their site is Cloudflare-fronted
-// and the rates host throttles under load (L-048). Keep concurrency low.
+// This integration runs with the operator's agreement. Politeness is a hard
+// requirement regardless (D-003): the site is Cloudflare-fronted and the rates
+// host throttles under sustained load. Keep concurrency low.
+//
+// Commercial terms are NOT recorded here — see the private ops notes.
 module.exports = {
   WEBSITE_ID: 479059,
   // Lodgify tenant slug, from the checkout URL:
