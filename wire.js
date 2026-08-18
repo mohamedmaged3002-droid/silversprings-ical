@@ -21,8 +21,14 @@ async function main() {
     .map((p) => ({
       wordpress_post_id: p.wp,
       ical_url: `${cfg.PAGES_BASE_URL}/${p.wp}.ics`,
-      listing_slug: p.slug,
-      sheet_code: p.internalName || null,
+      // MUST equal units.slug exactly — verified against the almaza/kennah rows,
+      // where listing_slug matches units.slug character for character. The scrape's
+      // raw Lodgify slug is NOT prefixed, so prefix it here or the two tables
+      // disagree and any slug-based join silently returns nothing.
+      listing_slug: `${cfg.SOURCE}-${p.slug}`,
+      // sheet_code is the operator-facing unit code. Silver Springs titles carry no
+      // operator code, so we use our own stable SS### (== wp offset from WP_BASE).
+      sheet_code: `SS${String(p.wp - cfg.WP_BASE + 1).padStart(3, '0')}`,
       notes: `[${cfg.SOURCE}-ical auto]`,
       updated_at: new Date().toISOString(),
     }));
