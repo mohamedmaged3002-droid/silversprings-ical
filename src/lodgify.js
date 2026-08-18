@@ -91,7 +91,7 @@ function ratePeriodsToDaily({ periods }) {
 // Price EVERY date in [seasonStart, seasonEnd] using the operator's real rules:
 // the named period covering the date (later periods win on overlap), else the
 // operator's explicit "Default Rate". Lodgify reports useSmartPricing:false for
-// this site, so this IS the exact per-night price — there is no finer engine.
+// this tenant, so this IS the exact per-night price — there is no finer engine.
 //
 // Unlike ratePeriodsToDaily (periods only), this fills gaps with the Default
 // Rate — necessary because June/Sep/Oct are default-priced for ~all units, so
@@ -127,10 +127,10 @@ function parseCalendar(json = {}) {
   for (const d of days) {
     if (d.isAvailable) available += 1;
     else blocked.push(d.date);
-    // Almaza sets min-stay PER DATE (e.g. 3 in shoulder season, 7 in peak) — the
-    // old code took the FIRST day's value and ignored the rest, which stored an
-    // arbitrary number that under-stated the real minimum on peak dates (we then
-    // told guests "3-night minimum" on a unit Almaza only rents by the week).
+    // Lodgify sets min-stay PER DATE (e.g. 3 off-peak, 7 in peak). Taking the
+    // FIRST day's value and ignoring the rest stores an arbitrary number that can
+    // under-state the real minimum on peak dates — which means quoting a guest a
+    // shorter minimum than the operator will actually accept.
     // Keep the whole per-date map, plus the min/max across the horizon.
     if (typeof d.minimalStay === 'number') {
       minStayByDate[d.date] = d.minimalStay;
@@ -139,8 +139,8 @@ function parseCalendar(json = {}) {
     }
   }
   // `minStay` is the PEAK (max) requirement — the fail-safe single number. Quoting
-  // a shorter minimum than Almaza enforces means the booking gets rejected after
-  // we've already promised the guest (and on an OTA that's a penalised
+  // a shorter minimum than the operator enforces means the booking gets rejected
+  // after we've already promised the guest (and on an OTA that's a penalised
   // cancellation), so a consumer that can only hold one number must hold this one.
   // Per-date consumers should read `minStayByDate`.
   return { blocked, available, minStay: minStayMax, minStayMin, minStayMax, minStayByDate, covered: days.length };
