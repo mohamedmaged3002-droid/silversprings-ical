@@ -45,6 +45,7 @@ const FX_PATH = path.join(__dirname, 'state', 'fx.json');
 
 const OUT_DIR = path.join(__dirname, 'out');
 const CHANGE_MSG_PATH = path.join(OUT_DIR, 'change-message.json');   // -> send-alert.js
+const CHANGED_UNITS_PATH = path.join(OUT_DIR, 'changed-units.json'); // -> build-changes.py
 
 const DRY = process.argv.includes('--dry-run');
 const SEED = process.argv.includes('--seed');
@@ -314,8 +315,31 @@ async function main() {
   if (DRY) { console.log('[dry-run] NOT writing artifacts or baseline.'); return 0; }
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
+
+  // Same split the other watchers use: pricewatch DETECTS and drops artifacts,
+  // build-changes.py turns them into the attached sheet, send-alert.js delivers.
+  // Roster changes go in the payload too — Almaza leaves them in the email body,
+  // which means a roster-only day sends a bodyless email once the attachment rule
+  // kicks in. Putting them in the sheet keeps every alert attachment-only.
+  const byWp = new Map(units.map((u) => [String(u.wp), u]));
+  fs.writeFileSync(CHANGED_UNITS_PATH, JSON.stringify({
+    dateStr: new Date().toISOString().slice(0, 10),
+    fx,
+    units: diff.priceChanges.map((pc) => {
+      const u = byWp.get(String(pc.wp));
+      return {
+        wp: pc.wp,
+        code: u ? `SS${String(pc.wp - cfg.WP_BASE + 1).padStart(3, '0')}` : null,
+        title: u ? u.title : `wp${pc.wp}`,
+        // ranges carry USD (the quoted currency); the sheet shows both.
+        ranges: pc.ranges,
+      };
+    }),
+    addedUnits: diff.addedUnits,
+    removedUnits: diff.removedUnits,
+  }));
   fs.writeFileSync(CHANGE_MSG_PATH, JSON.stringify({ subject: summary.subject, body: summary.body }));
-  console.log('Artifacts: out/change-message.json');
+  console.log('Artifacts: out/changed-units.json + out/change-message.json');
   writeBaseline(nextBaseline, newRoster);
   fs.mkdirSync(path.dirname(FX_PATH), { recursive: true });
   fs.writeFileSync(FX_PATH, JSON.stringify({ rate: fx, live: fxLive, at: new Date().toISOString() }, null, 2) + '\n');

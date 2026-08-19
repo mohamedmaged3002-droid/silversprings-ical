@@ -12,6 +12,10 @@ on:
         description: 'Diff and log only — no DB write, no email, no baseline advance'
         type: boolean
         default: false
+      send_test:
+        description: 'Send a TEST digest now, to prove SMTP works without waiting for a real change'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -33,15 +37,34 @@ jobs:
         with:
           node-version: '22'   # 22+ has native fetch/WebSocket
           cache: 'npm'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - run: npm ci
+      - run: pip install --quiet openpyxl
       - run: npx playwright install --with-deps chromium
 
+      # Proves the mail path end-to-end — App Password valid, sender/account match,
+      # recipients correct — without waiting for the operator to move a price.
+      # Writes the same out/change-message.json a real change would, so it exercises
+      # send-alert.js exactly as production does rather than a parallel code path.
+      - name: Build a TEST digest
+        if: ${{ inputs.send_test }}
+        run: node scripts/make-test-digest.js
+
       - name: Refresh prices + detect changes
+        if: ${{ !inputs.send_test }}
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           UNIT_SPACING_MS: '4500'
         run: node pricewatch.js ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      # Turns out/changed-units.json into the attached sheet. Writes nothing when
+      # nothing changed, which is what makes the email attachment-only.
+      - name: Build the changes sheet
+        if: ${{ !inputs.dry_run }}
+        run: python build-changes.py
 
       - name: Email the digest (skipped when SMTP is unset)
         if: ${{ !inputs.dry_run }}
@@ -52,7 +75,7 @@ jobs:
         run: node send-alert.js
 
       - name: Commit the advanced baseline
-        if: ${{ !inputs.dry_run }}
+        if: ${{ !inputs.dry_run && !inputs.send_test }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
