@@ -41,6 +41,10 @@ index = json.loads((ROOT / "docs" / "index.json").read_text())
 props = {p["wp"]: p for p in index["properties"]}
 prices = json.loads((ROOT / "output" / "daily-prices.json").read_text())   # wp -> [{date,price(EGP),usd}]
 r2 = json.loads((ROOT / "output" / "r2-photos.json").read_text())
+# Per-unit Google Drive folders for the OTA team (maged@bluekeys.co, anyone-with-link).
+# Sourced from the operator CDN at 4000px — NOT the 1920px R2 web copy (L-086).
+_dl = ROOT / "output" / "drive-links.json"
+drive = json.loads(_dl.read_text()) if _dl.exists() else {}
 feeds = {int(p.stem) for p in (ROOT / "docs").glob("*.ics")}
 
 env = {}
@@ -160,7 +164,7 @@ for r in live:
         r.get("min_nights") or p.get("minStay"),
         (r.get("short_description") or "").strip(),
         ", ".join(sorted(r.get("amenities") or [])),
-        "", len(photos),                      # gdrive folder not built yet
+        (drive.get(str(wp)) or {}).get("url", ""), len(photos),
         f"{PAGES}/{wp}.ics" if wp in feeds else "",
         "", "",                               # airbnb / booking — UNKNOWN, see note
         r.get("source_url") or "",
@@ -174,6 +178,8 @@ rows.sort(key=lambda x: (0 if x[ELIG_COL - 1] == "YES" else 1, x[0]))
 ws = sheet(
     "Silver Springs Master", "Silver Springs Residence — OTA listing pack",
     "One row per unit with the nightly USD rate for every month. 45 units, Silver Palm compound, New Cairo. "
+    "photos_drive_folder links are anyone-with-link Google Drive folders (maged@bluekeys.co) holding 4000px images "
+    "pulled from the operator's own CDN — NOT the smaller copies the website serves. "
     "occupancy_pct is computed INSIDE each unit's advance-booking window — the raw blocked count would read ~5x higher "
     "because Lodgify reports 'beyond the booking window' identically to 'booked' (Brain L-119). "
     "RED ROWS AT THE BOTTOM ARE NOT READY TO LIST — why_not_ready says why. "
