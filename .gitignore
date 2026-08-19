@@ -1,5 +1,5 @@
 node_modules/
 .env
 output/
-out/
+out/           # change-message.json is transient; the baseline lives in state/
 .DS_Store

@@ -1,0 +1,69 @@
+name: Silver Springs price watch
+
+on:
+  schedule:
+    # 04:20 UTC = 06:20 Cairo, daily — lands before the team's morning, and off the
+    # hour so it doesn't collide with the :17 iCal sync or the other operators'
+    # watchers (soul/mynt at 06:00 UTC, almaza at 04:00 UTC).
+    - cron: '20 4 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Diff and log only — no DB write, no email, no baseline advance'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+# Share ONE group with the iCal sync: both drive Chromium against the same
+# throttled Lodgify hosts, and two concurrent scrapes is how you get walled off.
+# cancel-in-progress:false so neither job is killed mid-run.
+concurrency:
+  group: silversprings-scrape
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'   # 22+ has native fetch/WebSocket
+          cache: 'npm'
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+
+      - name: Refresh prices + detect changes
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          UNIT_SPACING_MS: '4500'
+        run: node pricewatch.js ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Email the digest (skipped when SMTP is unset)
+        if: ${{ !inputs.dry_run }}
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
+        run: node send-alert.js
+
+      - name: Commit the advanced baseline
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state/ data/roster.json
+          if git diff --staged --quiet; then echo "No baseline change."; exit 0; fi
+          git commit -m "chore: advance Silver Springs price baseline [skip ci]"
+          # main can move under us — the iCal sync commits docs/ on its own cadence.
+          for i in 1 2 3 4 5; do
+            git push && { echo "Pushed (attempt $i)."; exit 0; }
+            echo "Push rejected; integrating and retrying ($i)..."
+            git fetch origin main
+            git merge -X ours --no-edit origin/main || true
+          done
+          echo "ERROR: push failed after 5 attempts"; exit 1
