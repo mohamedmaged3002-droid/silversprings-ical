@@ -37,7 +37,11 @@ jobs:
         with:
           node-version: '22'   # 22+ has native fetch/WebSocket
           cache: 'npm'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - run: npm ci
+      - run: pip install --quiet openpyxl
       - run: npx playwright install --with-deps chromium
 
       # Proves the mail path end-to-end — App Password valid, sender/account match,
@@ -55,6 +59,12 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           UNIT_SPACING_MS: '4500'
         run: node pricewatch.js ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      # Turns out/changed-units.json into the attached sheet. Writes nothing when
+      # nothing changed, which is what makes the email attachment-only.
+      - name: Build the changes sheet
+        if: ${{ !inputs.dry_run }}
+        run: python build-changes.py
 
       - name: Email the digest (skipped when SMTP is unset)
         if: ${{ !inputs.dry_run }}

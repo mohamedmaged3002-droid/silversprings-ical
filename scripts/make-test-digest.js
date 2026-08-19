@@ -14,6 +14,7 @@ const fs = require('fs');
 const path = require('path');
 
 const OUT_DIR = path.join(__dirname, '..', 'out');
+const CHANGED_UNITS = path.join(OUT_DIR, 'changed-units.json');
 const stamp = new Date().toISOString().replace('T', ' ').slice(0, 16) + ' UTC';
 
 const roster = (() => {
@@ -52,6 +53,21 @@ const body = [
 ].join('\n');
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
+
+// Also write a representative changed-units.json so build-changes.py produces a real
+// sheet and the test exercises the ATTACHMENT path — which is the whole delivery
+// format. A test that only proved the text fallback would prove the wrong thing.
+fs.writeFileSync(CHANGED_UNITS, JSON.stringify({
+  dateStr: new Date().toISOString().slice(0, 10),
+  fx: 50.5311,
+  units: [{
+    wp: 96001, code: 'SS001', title: 'TEST ROW — Monochrome - 3 Bedroom - Garden View - FF',
+    ranges: [{ from: '2026-12-25', to: '2026-12-31', oldEgp: 194, newEgp: 205 }],
+  }],
+  addedUnits: ['TEST-ONLY-not-a-real-unit'],
+  removedUnits: [],
+}));
+
 fs.writeFileSync(path.join(OUT_DIR, 'change-message.json'), JSON.stringify({ subject, body }));
 console.log('TEST digest written to out/change-message.json — send-alert.js will deliver it.');
 console.log(`subject: ${subject}`);
