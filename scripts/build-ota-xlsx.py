@@ -53,7 +53,7 @@ for line in (ROOT / ".env").read_text().splitlines():
         k, v = line.split("=", 1); env[k.strip()] = v.strip()
 req = urllib.request.Request(
     f"{env['SUPABASE_URL'].rstrip('/')}/rest/v1/units?source=eq.silversprings"
-    "&select=wp_post_id,source_code,operator_unit_code,title,slug,short_description,status,"
+    "&select=wp_post_id,source_code,operator_unit_code,title,slug,short_description,the_property,status,"
     "beds,baths,guests,min_nights,cleaning_fee_egp,area,compound,amenities,source_url,notes,photo_urls"
     "&order=wp_post_id",
     headers={"apikey": env["SUPABASE_SERVICE_ROLE_KEY"],
@@ -162,7 +162,10 @@ for r in live:
         r.get("guests"), r.get("beds"), r.get("baths"),
         usd_now, (usd_now * FX) if usd_now else None,
         r.get("min_nights") or p.get("minStay"),
-        (r.get("short_description") or "").strip(),
+        # FULL description. `short_description` is deliberately truncated to 200
+        # chars for listing cards, so using it here cut every row mid-sentence.
+        # The OTA team needs the whole text to build a listing from.
+        (r.get("the_property") or r.get("short_description") or "").strip(),
         ", ".join(sorted(r.get("amenities") or [])),
         (drive.get(str(wp)) or {}).get("url", ""), len(photos),
         f"{PAGES}/{wp}.ics" if wp in feeds else "",
