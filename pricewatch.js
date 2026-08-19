@@ -33,6 +33,7 @@ const { openBrowser, fetchJsonInPage, sleep } = require('./src/browser');
 const { discoverRoster } = require('./src/discover');
 const { parseRates, dailyPricesForSeason } = require('./src/lodgify');
 const { diffAll } = require('./src/changes');
+const { fetchEgpPerUsd } = require('./src/fx');
 
 const HORIZON_DAYS = Number(process.env.HORIZON_DAYS) || 365;
 
@@ -40,6 +41,7 @@ const UNITS_PATH = path.join(__dirname, 'data', 'units.json');
 const STATE_PATH = path.join(__dirname, 'state', 'prices.json');
 const ROSTER_PATH = path.join(__dirname, 'data', 'roster.json');
 const DAILY_PATH = path.join(__dirname, 'output', 'daily-prices.json'); // for the OTA pack
+const FX_PATH = path.join(__dirname, 'state', 'fx.json');
 
 const OUT_DIR = path.join(__dirname, 'out');
 const CHANGE_MSG_PATH = path.join(OUT_DIR, 'change-message.json');   // -> send-alert.js
@@ -73,17 +75,25 @@ function serializePriceMap(map) {
 }
 
 // Keep output/daily-prices.json in the OTA pack's shape ({wp:[{date,price,usd}]}).
-function writeDailyForSheet(priceMap, usdMap) {
+// `usdMap` is the source of truth; price is the EGP conversion at `fx`.
+function writeDailyForSheet(usdMap, fx) {
   fs.mkdirSync(path.dirname(DAILY_PATH), { recursive: true });
   const out = {};
-  for (const wp of Object.keys(priceMap)) {
-    out[wp] = Object.entries(priceMap[wp]).sort().map(([date, price]) => ({
-      date, price, usd: (usdMap[wp] || {})[date] ?? null,
+  for (const wp of Object.keys(usdMap)) {
+    out[wp] = Object.entries(usdMap[wp]).sort().map(([date, usd]) => ({
+      date, price: Math.round(usd * fx), usd,
     }));
   }
   fs.writeFileSync(DAILY_PATH, JSON.stringify(out));
 }
 
+// ⚠️ THE BASELINE STORES USD, NOT EGP.
+// The operator quotes USD; the EGP we publish is USD x their live FX. If the
+// baseline held EGP, every FX tick would look like a price change on all 45 units
+// and the team would get a "45 price changes" email every morning until they
+// muted it. Diffing USD isolates the thing that actually changed: the rate card.
+// FX movement still rewrites the DB (so we keep matching their site) — it just
+// doesn't raise an alert.
 function writeBaseline(priceMap, roster) {
   fs.mkdirSync(path.dirname(STATE_PATH), { recursive: true });
   fs.writeFileSync(STATE_PATH, serializePriceMap(priceMap));
@@ -108,7 +118,7 @@ async function fetchRatesWithBackoff(page, propId) {
 }
 
 // ---- the A half: push refreshed prices into Supabase --------------------------
-async function upsertPrices(changedWps, priceMap) {
+async function upsertPrices(changedWps, usdMap, fx) {
   const URL_BASE = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
   const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!URL_BASE || !KEY) {
@@ -117,8 +127,11 @@ async function upsertPrices(changedWps, priceMap) {
   }
   const rows = [];
   for (const wp of changedWps) {
-    for (const [date, price] of Object.entries(priceMap[wp] || {})) {
-      rows.push({ wp_post_id: Number(wp), date, price, currency: 'EGP', source: cfg.SOURCE });
+    for (const [date, usd] of Object.entries(usdMap[wp] || {})) {
+      // EGP = the operator's USD x the operator's OWN live rate. No markup:
+      // Silver Springs is 0% (service_fee_percent = 0, cleaning = 0), so the
+      // guest total on bluekeys.co equals the total on their own site.
+      rows.push({ wp_post_id: Number(wp), date, price: Math.round(usd * fx), currency: 'EGP', source: cfg.SOURCE });
     }
   }
   if (!rows.length) return { written: 0, configured: true };
@@ -142,10 +155,14 @@ async function upsertPrices(changedWps, priceMap) {
   return { written: done, configured: true };
 }
 
-const fmtRange = (r) =>
-  `  ${r.from === r.to ? r.from : `${r.from}→${r.to}`}: ${r.oldEgp} → ${r.newEgp} EGP`;
+// The diff runs on USD (see writeBaseline), so label it USD and show the EGP the
+// guest actually sees alongside it. Mislabelling these as EGP would make a $10
+// change look like a 10-pound change.
+const fmtRange = (r, fx) =>
+  `  ${r.from === r.to ? r.from : `${r.from}→${r.to}`}: ` +
+  `$${r.oldEgp} → $${r.newEgp}  (EGP ${Math.round(r.oldEgp * fx).toLocaleString()} → ${Math.round(r.newEgp * fx).toLocaleString()})`;
 
-function buildSummary(diff, units, dbNote) {
+function buildSummary(diff, units, dbNote, fx) {
   const byWp = new Map(units.map((u) => [String(u.wp), u]));
   const n = diff.priceChanges.length;
   const parts = [];
@@ -173,11 +190,12 @@ function buildSummary(diff, units, dbNote) {
   for (const pc of diff.priceChanges) {
     const u = byWp.get(String(pc.wp));
     lines.push(`[wp${pc.wp}] ${u ? u.title : `wp${pc.wp}`}`);
-    for (const r of pc.ranges) lines.push(fmtRange(r));
+    for (const r of pc.ranges) lines.push(fmtRange(r, fx));
     lines.push('');
   }
   if (dbNote) lines.push(dbNote, '');
-  lines.push(`Prices shown in EGP at the pinned FX of ${cfg.FX_USD_EGP} (the operator quotes USD).`);
+  lines.push(`The operator quotes USD. EGP shown at ${fx} — their own live rate, so bluekeys.co matches`);
+  lines.push(`their storefront exactly (no markup: 0% service fee, no cleaning fee).`);
   return { subject, body: lines.join('\n').trimEnd() + '\n' };
 }
 
@@ -192,11 +210,15 @@ async function main() {
   const { start, end } = horizon();
   console.log(`horizon: ${start} .. ${end} (${HORIZON_DAYS} days, rolling)`);
 
+  const prevFx = loadJson(FX_PATH, null);
   const { browser, page } = await openBrowser();
-  const newPrices = {};
-  const newUsd = {};
+  const newPrices = {};          // USD per date — the baseline + diff basis
+  let fx = cfg.FX_USD_EGP, fxLive = false, fxWhy = '';
   let newRoster = oldRoster;
   try {
+    const fxRes = await fetchEgpPerUsd(page);
+    fx = fxRes.rate; fxLive = fxRes.live; fxWhy = fxRes.why || '';
+    console.log(`fx: ${fx} EGP/USD ${fxLive ? '(live, from the operator\'s own currency table)' : `(FALLBACK — ${fxWhy})`}`);
     const disc = await discoverRoster(page);
     newRoster = disc.units;
     console.log(`roster: ${newRoster.length} units (site advertises ${disc.expected})`);
@@ -214,8 +236,7 @@ async function main() {
           throw new Error(`priced in ${cur}, not ${cfg.RATE_CURRENCY} — refusing to convert blindly`);
         }
         const daily = dailyPricesForSeason(rates, start, end);
-        newPrices[u.wp] = Object.fromEntries(daily.map((r) => [r.date, Math.round(r.price * cfg.FX_USD_EGP)]));
-        newUsd[u.wp] = Object.fromEntries(daily.map((r) => [r.date, r.price]));
+        newPrices[u.wp] = Object.fromEntries(daily.map((r) => [r.date, r.price]));   // USD
         consecutiveFails = 0;
         console.log(`[${i}/${units.length}] ${u.wp} ${u.title} — ${daily.length} priced dates`);
       } catch (e) {
@@ -239,17 +260,37 @@ async function main() {
 
   // Merge so a unit that transiently failed to fetch keeps its last-known baseline.
   const nextBaseline = { ...baseline, ...newPrices };
-  if (!DRY) writeDailyForSheet(nextBaseline, newUsd);
+  if (!DRY) writeDailyForSheet(nextBaseline, fx);
+
+  // FX moved (or this is the first run that records it)? Then the EGP we publish
+  // is stale even if no rate card changed — rewrite every unit so we keep matching
+  // their storefront. This does NOT trigger an email; only rate-card and roster
+  // changes do.
+  const fxChanged = !prevFx || Number(prevFx.rate) !== Number(fx);
 
   if (firstRun) {
     console.log(`Seed run: establishing baseline for ${Object.keys(newPrices).length} units — no email sent.`);
     if (DRY) { console.log('[dry-run] seed: NOT writing baseline.'); return 0; }
     writeBaseline(nextBaseline, newRoster);
+    fs.mkdirSync(path.dirname(FX_PATH), { recursive: true });
+    fs.writeFileSync(FX_PATH, JSON.stringify({ rate: fx, live: fxLive, at: new Date().toISOString() }, null, 2) + '\n');
     return 0;
   }
 
+  // FX-only movement: no alert (nothing the team can act on), but the published
+  // EGP is now stale against their storefront, so rewrite every unit.
   if (!changed) {
-    console.log('No price or roster changes — nothing written, no email sent.');
+    if (fxChanged && !DRY && !NO_DB) {
+      const all = Object.keys(nextBaseline);
+      const { written, configured } = await upsertPrices(all, nextBaseline, fx);
+      if (configured) {
+        console.log(`FX moved ${prevFx ? prevFx.rate : '(none)'} -> ${fx}: rewrote ${written} rows so we keep matching their site. No email (not actionable).`);
+        fs.mkdirSync(path.dirname(FX_PATH), { recursive: true });
+        fs.writeFileSync(FX_PATH, JSON.stringify({ rate: fx, live: fxLive, at: new Date().toISOString() }, null, 2) + '\n');
+      }
+    } else {
+      console.log('No price or roster changes — nothing written, no email sent.');
+    }
     return 0;
   }
 
@@ -261,13 +302,13 @@ async function main() {
   let dbNote = '';
   if (!DRY && !NO_DB && diff.priceChanges.length) {
     const wps = diff.priceChanges.map((pc) => String(pc.wp));
-    const { written, configured } = await upsertPrices(wps, nextBaseline);
+    const { written, configured } = await upsertPrices(wps, nextBaseline, fx);
     dbNote = configured
       ? `unit_daily_prices updated: ${written} rows across ${wps.length} unit(s) — the site is now quoting these.`
       : 'unit_daily_prices NOT updated (no Supabase credentials in this run) — the site is still quoting the OLD prices.';
   }
 
-  const summary = buildSummary(diff, units, dbNote);
+  const summary = buildSummary(diff, units, dbNote, fx);
   console.log('---\n' + summary.body + '---');
 
   if (DRY) { console.log('[dry-run] NOT writing artifacts or baseline.'); return 0; }
@@ -276,6 +317,8 @@ async function main() {
   fs.writeFileSync(CHANGE_MSG_PATH, JSON.stringify({ subject: summary.subject, body: summary.body }));
   console.log('Artifacts: out/change-message.json');
   writeBaseline(nextBaseline, newRoster);
+  fs.mkdirSync(path.dirname(FX_PATH), { recursive: true });
+  fs.writeFileSync(FX_PATH, JSON.stringify({ rate: fx, live: fxLive, at: new Date().toISOString() }, null, 2) + '\n');
   return 0;
 }
 
