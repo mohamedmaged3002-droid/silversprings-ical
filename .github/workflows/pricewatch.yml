@@ -12,6 +12,10 @@ on:
         description: 'Diff and log only — no DB write, no email, no baseline advance'
         type: boolean
         default: false
+      send_test:
+        description: 'Send a TEST digest now, to prove SMTP works without waiting for a real change'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -36,7 +40,16 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
 
+      # Proves the mail path end-to-end — App Password valid, sender/account match,
+      # recipients correct — without waiting for the operator to move a price.
+      # Writes the same out/change-message.json a real change would, so it exercises
+      # send-alert.js exactly as production does rather than a parallel code path.
+      - name: Build a TEST digest
+        if: ${{ inputs.send_test }}
+        run: node scripts/make-test-digest.js
+
       - name: Refresh prices + detect changes
+        if: ${{ !inputs.send_test }}
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -52,7 +65,7 @@ jobs:
         run: node send-alert.js
 
       - name: Commit the advanced baseline
-        if: ${{ !inputs.dry_run }}
+        if: ${{ !inputs.dry_run && !inputs.send_test }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
