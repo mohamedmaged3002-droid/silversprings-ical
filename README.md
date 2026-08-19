@@ -123,3 +123,42 @@ minimum than the operator enforces means a rejected booking after we've promised
   `ON CONFLICT (slug)`.
 - Photo filenames may contain spaces — percent-encode or downloads 404 silently.
 - Insert `unit_translations` `ar` rows or `/ar` serves English.
+
+## Alerting
+
+Daily price watch: **04:20 UTC (06:20 Cairo)**, `.github/workflows/pricewatch.yml`.
+Fires an email ONLY on a rate-card change or a new/removed unit — never on exchange-rate
+movement alone, which rewrites prices silently because it is not actionable.
+
+Format is **attachment-only**: `out/silversprings-changes.xlsx` (tabs: Price Changes,
+Roster Changes) with an empty body. Text is a fallback for when the sheet fails to build,
+because an alert that silently arrives blank is worse than a wordy one.
+
+### Recipients — documented here on purpose
+`NOTIFY_EMAIL` (repo secret) is set to:
+
+    maged@bluekeys.co, reservations@bluekeys.co, Youssefelsamanody58@gmail.com,
+    mfikry772007@gmail.com, mohamedahmedzaki17@gmail.com
+
+GitHub secrets cannot be read back and CI masks them in logs, so a list that lives ONLY
+in a secret is unrecoverable — that is exactly why "make the recipients the same as
+Kennah" could not be answered. Keep this block in step with the secret.
+
+⚠️ **Do not source staff addresses from `ota_staff` / `auth.users`.** Those rows carry
+seeded `firstname@bluekeys.co` placeholders that are not real mailboxes. The working
+addresses are mostly personal Gmail; the other watchers hardcode them in their workflow
+YAML, which is where these came from.
+
+⚠️ `samanoudi@bluekeys.co` appears in soul-price-watch, almaza-ical and gap-watch but was
+dropped by brassbell-ical (the newest) in favour of `Youssefelsamanody58@gmail.com` —
+it looks dead, which would mean Samanody silently misses those three digests. Unconfirmed.
+
+Amr Selim (`amrselim811@gmail.com`) is on Brassbell's list but deliberately NOT on this
+one. Khalo and Ali Haytham are on the OTA Console roster but have no known address.
+
+### Verify delivery without waiting for a real change
+    gh workflow run "Silver Springs price watch" -f send_test=true \
+      --repo mohamedmaged3002-droid/silversprings-ical
+
+Writes the same artifacts a real change would, so it exercises the production mail path.
+Touches no prices, no baseline, no DB.
