@@ -53,15 +53,41 @@ shortfall, so a partial roster can't pass as complete.
 CMS pages share the `/en/{slug}` shape with units and are excluded **by name** (`CMS_SLUGS`) — there
 is no structural way to tell them apart here.
 
-## Rates are quoted in USD
+## Rates are quoted in USD; EGP tracks the operator's OWN rate
 
-The storefront renders EGP but the rates API returns `"currency":"USD"`. FX is **pinned** in
-`src/config.js` rather than fetched live, so a re-run is reproducible and an FX move cannot silently
-reprice the roster. `build-prices-sql.js` re-checks the currency **per unit** and refuses to convert
-if any unit reports something other than USD.
+The storefront renders EGP but the rates API returns `"currency":"USD"`.
+
+**We publish EGP at the operator's live rate, not a pinned one.** Lodgify exposes the currency table
+its storefronts convert with, so `src/fx.js` reads it each run:
+
+    euroForex(EGP) / euroForex(USD) = 58.5352 / 1.1584 = 50.5311 EGP/USD
+
+This is deliberate: the brief is *same price as their website, no markup*, and a pinned rate cannot
+hold that. Pinning 50 had us **1.05% below** their own prices. `cfg.FX_USD_EGP` remains only as a
+FALLBACK when the table is unreachable — the run says so in the log, and a stale FX on a fresh rate
+card is exactly how a roster gets quietly mispriced.
+
+Consequence: **the price baseline stores USD, not EGP** (`state/prices.json`). Diffing EGP would make
+every FX tick look like a price change on all 45 units and email a phantom digest daily. FX movement
+rewrites the DB silently; only rate-card and roster changes alert.
+
+`build-prices-sql.js` and `pricewatch.js` both re-check the currency **per unit** and refuse to
+convert if any unit reports something other than USD — load-bearing, because the rates endpoint
+ignores the website id in its path and will serve another Lodgify customer's card in their own
+currency (Brain L-121).
 
 `useSmartPricing:false` on this tenant, so the default rate + named periods are exact — there is no
 finer pricing engine to consult.
+
+## No markup
+
+`service_fee_percent = 0` and `cleaning_fee_egp = 0`. Verified in `new-site/src/lib/fees/index.ts`:
+non-birdnest sources route to `myntFees()`, where `servicePct = unit.service_fee_percent ?? 0` and
+`if (service > 0)` omits the line entirely — so 0% means no fee charged AND no line shown. Guest
+total = nightly x nights, matching their storefront.
+
+(Contrast Almaza, which carries `service_fee_percent = 10` **and** has the 10% baked into its
+`unit_daily_prices` rows — so it charges the markup twice. Do not copy that pattern here.)
 
 ## wp_post_id assignment
 
